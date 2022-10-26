@@ -219,20 +219,19 @@ function calculateWinner(squares) {
     [0, 6, 12, 18, 24],
     [4, 8, 12, 16, 20],
   ];
-  console.log("squares", squares);
   for (let i = 0; i < size; i++) {
-    let flag = 0;
-    let flagY = 0;
+    let rowFlag = 0;
+    let colFlag = 0;
     for (let j = 0; j < size; j++) {
       if (squares[i * size + j] === "X") {
-        flag += 1;
+        rowFlag += 1;
       } else if (squares[i * size + j] === "O") {
-        flag -= 1;
+        rowFlag -= 1;
       }
       if (squares[i + j * size] === "X") {
-        flagY += 1;
+        colFlag += 1;
       } else if (squares[i + j * size] === "O") {
-        flagY -= 1;
+        colFlag -= 1;
       }
 
       const pos = i * size + j;
@@ -246,26 +245,26 @@ function calculateWinner(squares) {
         else if (squares[pos] === "O") diag[1] -= 1;
       }
     }
-    if (flagY === -size || flagY === size) {
+    if (colFlag === -size || colFlag === size) {
       let line = [];
       for (let index = 0; index < size; index++) {
         line.push(i + index * size);
       }
-      if (flagY === -size) {
-        return { winner: "O", line: line, isDraw: false };
-      } else if (flagY === size) {
+      if (colFlag === -size) {
         return { winner: "X", line: line, isDraw: false };
+      } else if (colFlag === size) {
+        return { winner: "O", line: line, isDraw: false };
       }
     }
-    if (flag === -size || flag === size) {
+    if (rowFlag === -size || rowFlag === size) {
       let line = [];
       for (let index = 0; index < size; index++) {
         line.push(i * size + index);
       }
-      if (flag === -size) {
-        return { winner: "X", line: line, isDraw: false };
-      } else if (flag === size) {
+      if (rowFlag === -size) {
         return { winner: "O", line: line, isDraw: false };
+      } else if (rowFlag === size) {
+        return { winner: "X", line: line, isDraw: false };
       }
     }
   }
